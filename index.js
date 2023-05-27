@@ -19,7 +19,9 @@ passport.use(
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
     (accessToken, refreshToken, profile, done) => {
-      console.log(accessToken, refreshToken, profile);
+      console.log("accessToken:", accessToken);
+      console.log("refreshToken:", refreshToken);
+      console.log("profile:", profile);
       return done(null, profile);
     }
   )
