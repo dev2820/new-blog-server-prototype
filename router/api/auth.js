@@ -14,10 +14,16 @@ Auth.get(
 
 Auth.get(
   "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/login" }),
+  passport.authenticate("google", {
+    failureRedirect: "/google/callback/failure",
+  }),
   (ctx) => {
     ctx.redirect("https://new-blog-web-prototype.vercel.app/");
   }
 );
+
+Auth.get("/google/callback/failure", (ctx) => {
+  ctx.body = "로그인에 실패했습니다!";
+});
 
 module.exports = Auth;
