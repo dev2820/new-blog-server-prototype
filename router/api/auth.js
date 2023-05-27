@@ -13,10 +13,7 @@ Auth.get(
     scope: ["profile", "email"],
     accessType: "offline",
     prompt: "consent",
-  }),
-  (ctx) => {
-    console.log("auth work!");
-  }
+  })
 );
 
 Auth.get(
