@@ -8,12 +8,12 @@ Auth.get("/", async (ctx) => {
 });
 
 Auth.get(
-  "/auth/google",
+  "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
 Auth.get(
-  "/auth/google/callback",
+  "/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
   (ctx) => {
     ctx.redirect("https://new-blog-web-prototype.vercel.app/");
