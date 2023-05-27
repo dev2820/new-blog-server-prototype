@@ -1,4 +1,5 @@
 const Koa = require("koa");
+const cors = require("@koa/cors");
 const passport = require("koa-passport");
 const GoogleStrategy = require("passport-google-oauth20");
 require("dotenv").config();
@@ -7,6 +8,7 @@ const app = new Koa();
 const router = require("./router");
 const PORT = process.env.PORT;
 
+app.use(cors());
 app.use(passport.initialize());
 
 passport.use(
