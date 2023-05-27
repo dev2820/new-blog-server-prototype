@@ -18,7 +18,7 @@ Auth.get(
     failureRedirect: "/google/callback/failure",
   }),
   (ctx) => {
-    ctx.redirect("https://new-blog-web-prototype.vercel.app/");
+    ctx.redirect("https://new-blog.store/");
   }
 );
 
