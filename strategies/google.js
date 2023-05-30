@@ -17,11 +17,8 @@ const strategy = new GoogleStrategy(
      * accessToken과 profile을 반환한다.
      * 이제 client는 bearer 헤더에 accessToken을 저장해 같이 보내야한다.
      */
-    console.log("accessToken:", accessToken);
-    console.log("refreshToken:", refreshToken);
-    console.log("profile:", profile);
     const user = await User.find(profile.provider, profile.id);
-    console.log("user:", user);
+
     if (!user) {
       User.create(
         profile.displayName,
