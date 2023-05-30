@@ -6,6 +6,7 @@ const Google = new Router();
 Google.get(
   "/",
   passport.authenticate("google", {
+    session: false,
     scope: ["profile", "email"],
     accessType: "offline",
     prompt: "consent",
@@ -15,6 +16,7 @@ Google.get(
 Google.get(
   "/callback",
   passport.authenticate("google", {
+    session: false,
     failureRedirect: "/google/callback/failure",
   }),
   (ctx) => {
