@@ -1,14 +1,15 @@
 const passport = require("koa-passport");
-const { google } = require("./strategies");
+
+const init = (app) => {
+  app.use(passport.initialize());
+};
 /**
  * add passport middleware to app
  * @param app koa application
  * @returns app
  */
-const registPassport = (app) => {
-  app.use(passport.initialize());
-
-  passport.use(google);
+const regist = (app, strategies) => {
+  strategies.forEach((strategy) => passport.use(strategy));
 
   return app;
 };
@@ -24,6 +25,7 @@ const authenticate = (provider, options) => {
 };
 
 module.exports = {
-  registPassport,
+  init,
+  regist,
   authenticate,
 };
