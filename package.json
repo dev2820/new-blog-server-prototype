@@ -15,6 +15,7 @@
     "dotenv": "^16.0.3",
     "koa": "^2.14.2",
     "koa-passport": "^6.0.0",
+    "mysql2": "^3.3.3",
     "passport-google-oauth20": "^2.0.0"
   },
   "devDependencies": {

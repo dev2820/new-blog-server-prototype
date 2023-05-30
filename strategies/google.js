@@ -1,12 +1,12 @@
 const GoogleStrategy = require("passport-google-oauth20");
-
+const { User } = require("../models");
 const strategy = new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.GOOGLE_CALLBACK_URL,
   },
-  (accessToken, refreshToken, profile, done) => {
+  async (accessToken, refreshToken, profile, done) => {
     /**
      * TODO:
      * provider와 id를 조합해 유저를 식별한다.
@@ -20,6 +20,17 @@ const strategy = new GoogleStrategy(
     console.log("accessToken:", accessToken);
     console.log("refreshToken:", refreshToken);
     console.log("profile:", profile);
+    const user = User.find(profile.provider, profile.id);
+    console.log("user:", user);
+    if (!user) {
+      User.create(
+        profile.displayName,
+        profile.id,
+        profile.email,
+        profile.provider
+      );
+    }
+
     return done(null, profile);
   }
 );
