@@ -1,8 +1,8 @@
+require("dotenv").config();
 const Koa = require("koa");
 const cors = require("@koa/cors");
 const { passport } = require("./middlewares");
 const router = require("./router");
-require("dotenv").config();
 
 const app = new Koa();
 const PORT = process.env.PORT;
