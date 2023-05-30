@@ -42,9 +42,10 @@ const registPassport = (app) => {
  * return passport.authenticate
  *
  * @param provider
+ * @param options
  */
-const authenticate = (provider) => {
-  return passport.authenticate(provider);
+const authenticate = (provider, options) => {
+  return passport.authenticate(provider, options);
 };
 module.exports = {
   registPassport,
