@@ -1,6 +1,5 @@
 const Koa = require("koa");
 const cors = require("@koa/cors");
-// const passport = require("koa-passport");
 const passport = require("./middlewares/passport");
 require("dotenv").config();
 
