@@ -34,6 +34,7 @@ const registPassport = (app) => {
       }
     )
   );
+
   return app;
 };
 
