@@ -20,8 +20,9 @@ Google.get(
     failureRedirect: "/google/callback/failure",
   }),
   (ctx) => {
-    console.log(ctx);
-    ctx.redirect("https://new-blog.store/");
+    const user = ctx.state.user;
+    console.log(user);
+    ctx.redirect(`https://new-blog.store?username=${user.name}}`);
   }
 );
 
