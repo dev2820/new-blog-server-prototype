@@ -12,11 +12,11 @@ const config = {
 const pool = mysql.createPool(config);
 
 const find = async (provider, id) => {
-  const result = await pool
+  const [rows] = await pool
     .promise()
     .query("SELECT * from Users WHERE provider=? and id=?", [provider, id]);
 
-  return result;
+  return rows.length > 0 ? rows[0] : null;
 };
 
 const create = async (name, id, email, provider) => {
