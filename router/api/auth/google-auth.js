@@ -23,7 +23,7 @@ Google.get(
     const user = ctx.state.user._json;
 
     ctx.redirect(
-      `https://new-blog.store?username=${user.name}&avator=${user.picture}`
+      `https://new-blog.store/login/callback?username=${user.name}&avator=${user.picture}`
     );
   }
 );
