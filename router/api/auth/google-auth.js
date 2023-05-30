@@ -20,10 +20,7 @@ Google.get(
     failureRedirect: "/google/callback/failure",
   }),
   (ctx) => {
-    const { query } = ctx;
     const user = ctx.state.user._json;
-
-    console.log(query);
 
     ctx.redirect(
       `https://new-blog.store?username=${user.name}&avator=${user.picture}`
