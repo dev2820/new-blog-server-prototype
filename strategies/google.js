@@ -26,7 +26,7 @@ const strategy = new GoogleStrategy(
       User.create(
         profile.displayName,
         profile.id,
-        profile.emails[0],
+        profile.emails[0].value,
         profile.provider
       );
     }
