@@ -17,7 +17,6 @@ const strategy = new GoogleStrategy(
         profile.provider
       );
     }
-    console.log("strategy works");
     /**
      * profile을 기반으로 jwt토큰을 만들어 부여한다.
      */

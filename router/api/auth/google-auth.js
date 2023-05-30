@@ -20,7 +20,7 @@ Google.get(
     failureRedirect: "/google/callback/failure",
   }),
   (ctx) => {
-    console.log("google-callback works");
+    console.log(ctx);
     ctx.redirect("https://new-blog.store/");
   }
 );
