@@ -20,7 +20,7 @@ const strategy = new GoogleStrategy(
     console.log("accessToken:", accessToken);
     console.log("refreshToken:", refreshToken);
     console.log("profile:", profile);
-    const user = User.find(profile.provider, profile.id);
+    const user = await User.find(profile.provider, profile.id);
     console.log("user:", user);
     if (!user) {
       User.create(
