@@ -17,7 +17,7 @@ Google.get(
   "/callback",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: "/google/callback/failure",
+    failureRedirect: "/callback/failure",
   }),
   (ctx) => {
     const user = ctx.state.user._json;
