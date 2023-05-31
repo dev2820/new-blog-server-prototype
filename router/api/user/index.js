@@ -1,8 +1,8 @@
 const Router = require("@koa/router");
-const { jwtMiddleware } = require("../../../middlewares");
+const { passport } = require("../../../middlewares");
 const User = new Router();
 
-User.get("/", jwtMiddleware, (ctx) => {
+User.get("/", passport.authenticate("local", { session: false }), (ctx) => {
   ctx.body = { message: "im authed" };
 });
 

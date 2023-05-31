@@ -22,15 +22,16 @@ Google.get(
   }),
   (ctx) => {
     const user = ctx.state.user._json;
-    /**
-     * profile을 기반으로 jwt토큰을 만들어 부여한다.
-     */
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+
+    const accessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
+    });
+    const refreshToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+      expiresIn: "24h",
     });
 
     ctx.redirect(
-      `https://new-blog.store/login/callback?username=${user.name}&avator=${user.picture}&token=${token}`
+      `https://new-blog.store/login/callback?username=${user.name}&avator=${user.picture}&token=${accessToken}`
     );
   }
 );
