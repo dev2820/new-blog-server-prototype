@@ -21,7 +21,7 @@ Google.get(
   }),
   (ctx) => {
     const user = ctx.state.user._json;
-    console.log(user);
+
     ctx.redirect(
       `https://new-blog.store/login/callback?username=${user.name}&avator=${user.picture}`
     );
