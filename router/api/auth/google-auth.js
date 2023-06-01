@@ -21,7 +21,7 @@ Google.get(
     session: false,
     failureRedirect: "/callback/failure",
   }),
-  (ctx) => {
+  async (ctx) => {
     const user = ctx.state.user._json;
 
     const accessToken = jwt.sign(
@@ -39,7 +39,7 @@ Google.get(
       }
     );
 
-    const existRefreshToken = Auth.find(user.id, user.provider);
+    const existRefreshToken = await Auth.find(user.id, user.provider);
     if (existRefreshToken) {
       Auth.update(user.id, user.provider, refreshToken);
     } else {
