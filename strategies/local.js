@@ -14,15 +14,6 @@ const strategy = new JwtStrategy(options, async (jwtPayload, done) => {
    */
   console.log("local strategy works", jwtPayload);
   if (Date.now() >= jwtPayload.exp * 1000) {
-    const refreshToken = await Auth.find(jwtPayload.email);
-    console.log(refreshToken);
-    if (!refreshToken || Date.now() >= refreshToken.exp * 1000) {
-      return done(null, false, {
-        status: 403,
-        message: "접근 권한이 없습니다",
-      });
-    }
-
     return done(null, false, {
       status: 401,
       message: "토큰이 만료되었습니다",
