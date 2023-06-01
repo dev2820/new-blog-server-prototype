@@ -24,6 +24,7 @@ Google.get(
   async (ctx) => {
     const { user } = ctx.state;
     const userEmail = user.emails.find((email) => email.verified).value;
+    const avator = user.photos[0].value;
 
     const accessToken = jwt.sign({ email: userEmail }, process.env.JWT_SECRET, {
       expiresIn: "1h",
@@ -42,10 +43,9 @@ Google.get(
     } else {
       await Auth.create(userEmail, refreshToken);
     }
-    console.log(user);
 
     ctx.redirect(
-      `https://new-blog.store/login/callback?username=${user.displayName}&avator=${user.picture}&token=${accessToken}`
+      `https://new-blog.store/login/callback?username=${user.displayName}&avator=${avator}&token=${accessToken}`
     );
   }
 );
