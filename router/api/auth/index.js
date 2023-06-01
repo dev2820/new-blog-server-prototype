@@ -15,14 +15,14 @@ authRouter.get("/update-token", async (ctx) => {
   /**
    * 토큰 재발급
    */
-  const _prevToken = ctx.headers.authorization.split(" ")[1];
-
   try {
+    const _prevToken = ctx.headers.authorization.split(" ")[1];
     const decoded = token.verify(_prevToken, { ignoreExpiration: true });
     if (!decoded) throw Error();
 
     const { email } = decoded;
     const refreshToken = await Auth.find(email);
+    console.log(refreshToken);
     /**
      * refresh token이 없다 or 유효하지 않다
      * 로그인 할 것을 요청한다. (403)
