@@ -13,7 +13,10 @@ const PORT = process.env.PORT;
 
 app.use(cors());
 passport.init(app);
-passport.regist(app, [googleStrategy, localStrategy]);
+passport.regist(app, [
+  { name: googleStrategy.name, strategy: googleStrategy },
+  { name: "local", strategy: localStrategy },
+]);
 
 app.use(router.routes());
 app.use(router.allowedMethods());

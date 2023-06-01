@@ -9,7 +9,7 @@ const init = (app) => {
  * @returns app
  */
 const regist = (app, strategies) => {
-  strategies.forEach((strategy) => passport.use(strategy));
+  strategies.forEach(({ name, strategy }) => passport.use(name, strategy));
 
   return app;
 };
