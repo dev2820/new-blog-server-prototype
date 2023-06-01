@@ -1,15 +1,14 @@
 const redis = require("async-redis");
 
+const DB_NAME = "auth";
+const client = redis.createClient();
+
 const _setValue = async (key, value) => {
-  const client = redis.createClient();
-  await client.set(key, value);
-  client.quit();
+  await client.set(`${DB_NAME}:${key}`, value);
 };
 
 const _getValue = async (key) => {
-  const client = redis.createClient();
-  const value = await client.get(key);
-  client.quit();
+  const value = await client.get(`${DB_NAME}:${key}`);
 
   return value;
 };
