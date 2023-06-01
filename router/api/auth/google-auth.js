@@ -22,7 +22,7 @@ Google.get(
     failureRedirect: "/callback/failure",
   }),
   async (ctx) => {
-    const user = ctx.state.user._json;
+    const { user } = ctx.state;
 
     const accessToken = jwt.sign(
       { id: user.id, provider: user.provider },
