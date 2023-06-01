@@ -1,7 +1,7 @@
 const Router = require("@koa/router");
 const GoogleAuth = require("./google-auth");
 const { passport } = require("../../../middlewares");
-const jwt = require("jsonwebtoken");
+const { token } = require("../../../utils");
 
 const Auth = new Router();
 
@@ -40,13 +40,8 @@ Auth.get("/refresh", passport.authenticate("local"), async (ctx) => {
    * access token을 새로 발급해준다.
    */
   if (ctx.user.status === 401) {
-    const newAccessToken = jwt.sign(
-      { id: user.id, provider: user.provider },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1m",
-      }
-    );
+    const userEmail = user.emails.find((email) => email.verified).value;
+    const newAccessToken = token.generateAccessToken({ email: userEmail });
     ctx.set("Authorization", `Bearer ${newAccessToken}`);
   }
 });

@@ -1,8 +1,7 @@
 const Router = require("@koa/router");
 const passport = require("../../../middlewares/passport");
 const { Auth } = require("../../../models");
-const jwt = require("jsonwebtoken");
-
+const { token } = require("../../../utils");
 const Google = new Router();
 
 Google.get(
@@ -26,16 +25,8 @@ Google.get(
     const userEmail = user.emails.find((email) => email.verified).value;
     const avator = user.photos[0].value;
 
-    const accessToken = jwt.sign({ email: userEmail }, process.env.JWT_SECRET, {
-      expiresIn: "1m",
-    });
-    const refreshToken = jwt.sign(
-      { email: userEmail },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "2m",
-      }
-    );
+    const accessToken = token.generateAccessToken({ email: userEmail });
+    const refreshToken = token.generateAccessToken({ email: userEmail });
 
     const existRefreshToken = await Auth.find(userEmail);
     if (existRefreshToken) {
