@@ -16,21 +16,13 @@ Auth.get("/update-token", async (ctx) => {
    */
   const _prevToken = ctx.headers.authorization.split(" ")[1];
   console.log(_prevToken);
-  console.log(token.verify(_prevToken));
+  console.log(token.decode(_prevToken));
   try {
-    /**
-     * access token이 없다 or 유효하지 않다
-     * 요청을 거절한다. (403)
-     */
-    const decoded = token.verify(_prevToken);
-    console.log(decoded);
-    if (!decoded) throw Error();
-
+    const refreshToken = await Auth.find(decoded.email);
     /**
      * refresh token이 없다 or 유효하지 않다
      * 로그인 할 것을 요청한다. (403)
      */
-    const refreshToken = await Auth.find(decoded.email);
     if (!refreshToken || Date.now() >= refreshToken.exp * 1000) {
       throw Error();
     }
