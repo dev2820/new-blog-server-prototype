@@ -14,21 +14,18 @@ const _getValue = async (key) => {
   return value;
 };
 
-const find = (id, provider) => {
-  const key = `${id}-${provider}`;
-  const result = _getValue(key);
+const find = (email) => {
+  const result = _getValue(email);
 
   return result;
 };
 
-const create = async (id, provider, refreshToken) => {
-  const key = `${id}-${provider}`;
-  await _setValue(key, refreshToken);
+const create = async (email, refreshToken) => {
+  await _setValue(email, refreshToken);
 };
 
-const update = async (id, provider, newRefreshToken) => {
-  const key = `${id}-${provider}`;
-  await _setValue(key, newRefreshToken);
+const update = async (email, newRefreshToken) => {
+  await _setValue(email, newRefreshToken);
 };
 
 module.exports = {
