@@ -42,9 +42,9 @@ Google.get(
     console.log(user);
     const existRefreshToken = await Auth.find(userEmail);
     if (existRefreshToken) {
-      Auth.update(userEmail, refreshToken);
+      await Auth.update(userEmail, refreshToken);
     } else {
-      Auth.create(userEmail, refreshToken);
+      await Auth.create(userEmail, refreshToken);
     }
 
     ctx.redirect(
