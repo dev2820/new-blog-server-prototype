@@ -44,7 +44,7 @@ Auth.get("/refresh", passport.authenticate("local"), async (ctx) => {
       { id: user.id, provider: user.provider },
       process.env.JWT_SECRET,
       {
-        expiresIn: "1h",
+        expiresIn: "1m",
       }
     );
     ctx.set("Authorization", `Bearer ${newAccessToken}`);

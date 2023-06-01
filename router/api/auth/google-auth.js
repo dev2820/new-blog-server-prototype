@@ -27,13 +27,13 @@ Google.get(
     const avator = user.photos[0].value;
 
     const accessToken = jwt.sign({ email: userEmail }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "1m",
     });
     const refreshToken = jwt.sign(
       { email: userEmail },
       process.env.JWT_SECRET,
       {
-        expiresIn: "24h",
+        expiresIn: "2m",
       }
     );
 
