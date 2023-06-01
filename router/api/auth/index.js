@@ -14,14 +14,15 @@ Auth.get("/update-token", async (ctx) => {
   /**
    * 토큰 재발급
    */
-  const _token = ctx.headers.authorization.split(" ")[1];
-
+  const _prevToken = ctx.headers.authorization.split(" ")[1];
+  console.log(_prevToken);
+  console.log(token.verify(_prevToken));
   try {
     /**
      * access token이 없다 or 유효하지 않다
      * 요청을 거절한다. (403)
      */
-    const decoded = token.verify(_token);
+    const decoded = token.verify(_prevToken);
     console.log(decoded);
     if (!decoded) throw Error();
 
@@ -38,7 +39,7 @@ Auth.get("/update-token", async (ctx) => {
      * access token이 만료되었고 refresh token도 있다.
      * access token을 새로 발급해준다.
      */
-    const userEmail = user.emails.find((email) => email.verified).value;
+    const userEmail = decoded.email;
     const newAccessToken = token.generateAccessToken({ email: userEmail });
     ctx.set("Authorization", `Bearer ${newAccessToken}`);
   } catch (error) {
