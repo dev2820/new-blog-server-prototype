@@ -37,6 +37,7 @@ Auth.get("/update-token", async (ctx) => {
     const newAccessToken = token.generateAccessToken({ email });
     ctx.set("Authorization", `Bearer ${newAccessToken}`);
   } catch (error) {
+    console.log(error);
     ctx.throw(403);
   }
 });
