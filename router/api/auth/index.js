@@ -17,7 +17,7 @@ Auth.get("/update-token", async (ctx) => {
   const _prevToken = ctx.headers.authorization.split(" ")[1];
 
   try {
-    const decoded = token.decode(_prevToken);
+    const decoded = token.verify(_prevToken, { ignoreExpiration: true });
     if (!decoded) throw Error();
 
     const { email } = decoded;

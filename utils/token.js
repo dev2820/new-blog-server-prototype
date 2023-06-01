@@ -20,8 +20,8 @@ const generateRefreshToken = (content) => {
   });
 };
 
-const verify = (token) => {
-  return jwt.verify(token, JWT_SECRET);
+const verify = (token, options) => {
+  return jwt.verify(token, JWT_SECRET, options);
 };
 
 const decode = (token) => {
