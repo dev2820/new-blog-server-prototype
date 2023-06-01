@@ -2,15 +2,16 @@ const Router = require("@koa/router");
 const GoogleAuth = require("./google-auth");
 const { passport } = require("../../../middlewares");
 const { token } = require("../../../utils");
+const { Auth } = require("../../../models");
 
-const Auth = new Router();
+const authRouter = new Router();
 
-Auth.get("/", async (ctx) => {
+authRouter.get("/", async (ctx) => {
   ctx.body = { message: "hello world" };
 });
 
-Auth.use("/google", GoogleAuth.routes());
-Auth.get("/update-token", async (ctx) => {
+authRouter.use("/google", GoogleAuth.routes());
+authRouter.get("/update-token", async (ctx) => {
   /**
    * 토큰 재발급
    */
@@ -42,4 +43,4 @@ Auth.get("/update-token", async (ctx) => {
   }
 });
 
-module.exports = Auth;
+module.exports = authRouter;
