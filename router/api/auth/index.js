@@ -22,14 +22,11 @@ authRouter.get("/update-token", async (ctx) => {
 
     const { email } = decoded;
     const refreshToken = await Auth.find(email);
-    console.log(refreshToken);
     /**
      * refresh token이 없다 or 유효하지 않다
      * 로그인 할 것을 요청한다. (403)
      */
-    if (!refreshToken || Date.now() >= refreshToken.exp * 1000) {
-      throw Error();
-    }
+    token.verify(refreshToken);
 
     /**
      * access token이 만료되었고 refresh token도 있다.
