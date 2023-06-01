@@ -14,8 +14,8 @@ const _getValue = async (key) => {
   return value;
 };
 
-const find = (email) => {
-  const result = _getValue(email);
+const find = async (email) => {
+  const result = await _getValue(email);
 
   return result;
 };
