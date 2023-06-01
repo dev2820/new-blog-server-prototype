@@ -23,23 +23,19 @@ Google.get(
   }),
   async (ctx) => {
     const { user } = ctx.state;
-    const userEmail = user.emails.find((email) => email.verified);
+    const userEmail = user.emails.find((email) => email.verified).value;
 
-    const accessToken = jwt.sign(
-      { email: userEmail.value },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1h",
-      }
-    );
+    const accessToken = jwt.sign({ email: userEmail }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
     const refreshToken = jwt.sign(
-      { email: userEmail.value },
+      { email: userEmail },
       process.env.JWT_SECRET,
       {
         expiresIn: "24h",
       }
     );
-    console.log(user);
+
     const existRefreshToken = await Auth.find(userEmail);
     if (existRefreshToken) {
       await Auth.update(userEmail, refreshToken);
