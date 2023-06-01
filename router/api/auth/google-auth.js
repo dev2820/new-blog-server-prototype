@@ -1,5 +1,6 @@
 const Router = require("@koa/router");
 const passport = require("../../../middlewares/passport");
+const { Auth } = require("../../../models");
 const jwt = require("jsonwebtoken");
 
 const Google = new Router();
@@ -23,12 +24,27 @@ Google.get(
   (ctx) => {
     const user = ctx.state.user._json;
 
-    const accessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
-    const refreshToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-      expiresIn: "24h",
-    });
+    const accessToken = jwt.sign(
+      { id: user.id, provider: user.provider },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+    const refreshToken = jwt.sign(
+      { id: user.id, provider: user.provider },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "24h",
+      }
+    );
+
+    const existRefreshToken = Auth.find(user.id, user.provider);
+    if (existRefreshToken) {
+      Auth.update(user.id, user.provider, refreshToken);
+    } else {
+      Auth.create(user.id, user.provider, refreshToken);
+    }
 
     ctx.redirect(
       `https://new-blog.store/login/callback?username=${user.name}&avator=${user.picture}&token=${accessToken}`

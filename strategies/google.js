@@ -8,18 +8,22 @@ const strategy = new GoogleStrategy(
     callbackURL: process.env.GOOGLE_CALLBACK_URL,
   },
   async (_, __, profile, done) => {
-    const user = await User.find(profile.provider, profile.id);
+    try {
+      const user = await User.find(profile.provider, profile.id);
 
-    if (!user) {
-      User.create(
-        profile.displayName,
-        profile.id,
-        profile.emails[0].value,
-        profile.provider
-      );
+      if (!user) {
+        User.create(
+          profile.displayName,
+          profile.id,
+          profile.emails[0].value,
+          profile.provider
+        );
+      }
+
+      return done(null, profile);
+    } catch (err) {
+      return done(null, false, { message: "create user failed" });
     }
-
-    return done(null, profile);
   }
 );
 

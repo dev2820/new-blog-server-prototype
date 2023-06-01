@@ -12,6 +12,7 @@
   "dependencies": {
     "@koa/cors": "^4.0.0",
     "@koa/router": "^12.0.0",
+    "async-redis": "^2.0.0",
     "dotenv": "^16.0.3",
     "jsonwebtoken": "^9.0.0",
     "koa": "^2.14.2",
@@ -19,7 +20,8 @@
     "koa-passport": "^6.0.0",
     "mysql2": "^3.3.3",
     "passport-google-oauth20": "^2.0.0",
-    "passport-jwt": "^4.0.1"
+    "passport-jwt": "^4.0.1",
+    "redis": "^4.6.7"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"

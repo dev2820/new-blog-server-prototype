@@ -1,5 +1,5 @@
 const { Strategy: JwtStrategy, ExtractJwt } = require("passport-jwt");
-
+const { Auth } = require("../models");
 const SECRET = process.env.JWT_SECRET;
 
 const options = {
@@ -10,10 +10,22 @@ const options = {
 
 const strategy = new JwtStrategy(options, async (jwtPayload, done) => {
   /**
-   * redis에서 jwtPayload.userId를 검사
-   * 유저가 없다 => 잘못된 토큰임 done(err)
+   * check expired
    */
+  if (Date.now() >= jwtPayload.exp * 1000) {
+    const refreshToken = Auth.find(jwtPayload.id, jwtPayload.provider);
+    if (!refreshToken || Date.now() >= refreshToken.exp * 1000) {
+      return done(null, false, {
+        status: 403,
+        message: "접근 권한이 없습니다",
+      });
+    }
 
+    return done(null, false, {
+      status: 401,
+      message: "토큰이 만료되었습니다",
+    });
+  }
   return done(null, jwtPayload);
 });
 
