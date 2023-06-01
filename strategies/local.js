@@ -14,6 +14,7 @@ const strategy = new JwtStrategy(options, async (jwtPayload, done) => {
    */
   if (Date.now() >= jwtPayload.exp * 1000) {
     const refreshToken = await Auth.find(jwtPayload.email);
+    console.log(refreshToken);
     if (!refreshToken || Date.now() >= refreshToken.exp * 1000) {
       return done(null, false, {
         status: 403,
