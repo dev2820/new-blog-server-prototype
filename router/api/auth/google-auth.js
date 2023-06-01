@@ -38,7 +38,7 @@ Google.get(
         expiresIn: "24h",
       }
     );
-
+    console.log(user);
     const existRefreshToken = await Auth.find(user.id, user.provider);
     if (existRefreshToken) {
       Auth.update(user.id, user.provider, refreshToken);
