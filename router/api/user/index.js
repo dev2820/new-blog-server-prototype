@@ -6,12 +6,16 @@ const userRouter = new Router();
 userRouter.get(
   "/",
   passport.authenticate("local", { session: false }),
-  (ctx) => {
+  async (ctx) => {
     const { user } = ctx.state;
     if (!user) ctx.throw(401);
 
-    User.find();
-    ctx.body = { message: "im authed" };
+    const _userInfo = await User.find(user.email);
+    const profile = {
+      name: _userInfo.name,
+      avator: _userInfo.avator,
+    };
+    ctx.body = profile;
   }
 );
 

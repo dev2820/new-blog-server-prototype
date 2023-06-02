@@ -23,7 +23,7 @@ const create = async (name, id, email, provider, avator) => {
   const result = await pool
     .promise()
     .query(
-      "INSERT INTO Users (name,id,email,provider, avator) VALUES (?,?,?,?,?)",
+      "INSERT INTO Users (name,id,email,provider,avator) VALUES (?,?,?,?,?)",
       [name, id, email, provider, avator]
     );
 
