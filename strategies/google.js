@@ -10,7 +10,7 @@ const strategy = new GoogleStrategy(
   async (_, __, profile, done) => {
     try {
       const user = await User.find(profile.provider, profile.id);
-      console.log(user);
+
       if (!user) {
         User.create(
           profile.displayName,
