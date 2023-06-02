@@ -35,9 +35,7 @@ Google.get(
       await Auth.create(userEmail, refreshToken);
     }
 
-    ctx.redirect(
-      `https://new-blog.store/login/callback?username=${user.displayName}&avator=${avator}&token=${accessToken}`
-    );
+    ctx.redirect(`https://new-blog.store/login/callback?token=${accessToken}`);
   }
 );
 
