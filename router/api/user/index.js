@@ -6,7 +6,7 @@ userRouter.get(
   "/",
   passport.authenticate("local", { session: false }),
   (ctx) => {
-    console.log(ctx.user);
+    console.log(ctx.state);
     if (!ctx.user) ctx.throw(401);
 
     console.log(ctx.user);
