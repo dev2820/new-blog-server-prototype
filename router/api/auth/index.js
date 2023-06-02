@@ -51,7 +51,6 @@ authRouter.get("/logout", async (ctx) => {
   } catch (error) {
     ctx.throw(403);
   }
-  await remove(ctx);
 });
 
 module.exports = authRouter;
