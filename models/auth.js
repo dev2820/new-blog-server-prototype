@@ -13,6 +13,10 @@ const _getValue = async (key) => {
   return value;
 };
 
+const _removeValue = async (key) => {
+  await client.del(`${DB_NAME}:${key}`);
+};
+
 const find = async (email) => {
   const result = await _getValue(email);
 
@@ -27,8 +31,13 @@ const update = async (email, newRefreshToken) => {
   await _setValue(email, newRefreshToken);
 };
 
+const remove = async (email) => {
+  await _removeValue(email);
+};
+
 module.exports = {
   find,
   create,
   update,
+  remove,
 };
