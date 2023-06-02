@@ -1,15 +1,16 @@
 const Router = require("@koa/router");
 const { passport } = require("../../../middlewares");
+const { User } = require("../../../models");
 const userRouter = new Router();
 
 userRouter.get(
   "/",
   passport.authenticate("local", { session: false }),
   (ctx) => {
-    console.log(ctx.state);
-    if (!ctx.user) ctx.throw(401);
+    const { user } = ctx.state;
+    if (!user) ctx.throw(401);
 
-    console.log(ctx.user);
+    User.find();
     ctx.body = { message: "im authed" };
   }
 );

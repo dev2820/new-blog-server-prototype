@@ -11,23 +11,21 @@ const config = {
 
 const pool = mysql.createPool(config);
 
-const find = async (provider, id) => {
+const find = async (email) => {
   const [rows] = await pool
     .promise()
-    .query("SELECT * from Users WHERE provider=? and id=?", [provider, id]);
+    .query("SELECT * from Users WHERE email=?", [email]);
 
   return rows.length > 0 ? rows[0] : null;
 };
 
-const create = async (name, id, email, provider) => {
+const create = async (name, id, email, provider, avator) => {
   const result = await pool
     .promise()
-    .query("INSERT INTO Users (name,id,email,provider) VALUES (?,?,?,?)", [
-      name,
-      id,
-      email,
-      provider,
-    ]);
+    .query(
+      "INSERT INTO Users (name,id,email,provider, avator) VALUES (?,?,?,?,?)",
+      [name, id, email, provider, avator]
+    );
 
   return result;
 };
