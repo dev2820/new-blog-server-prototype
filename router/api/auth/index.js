@@ -39,7 +39,7 @@ authRouter.get("/update-token", async (ctx) => {
   }
 });
 
-authRouter.use("/logout", async (ctx) => {
+authRouter.get("/logout", async (ctx) => {
   try {
     const _prevToken = ctx.headers.authorization.split(" ")[1];
     const decoded = token.verify(_prevToken, { ignoreExpiration: true });
