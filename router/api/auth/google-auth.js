@@ -34,7 +34,7 @@ Google.get(
     } else {
       await Auth.create(userEmail, refreshToken);
     }
-    console.log(avator);
+
     ctx.redirect(
       `https://new-blog.store/login/callback?username=${user.displayName}&avator=${avator}&token=${accessToken}`
     );
