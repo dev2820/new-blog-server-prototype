@@ -46,7 +46,7 @@ authRouter.get("/logout", async (ctx) => {
     if (!decoded) throw Error();
 
     const { email } = decoded;
-    Auth.remove(email);
+    await Auth.remove(email);
     ctx.body = "";
   } catch (error) {
     ctx.throw(403);
