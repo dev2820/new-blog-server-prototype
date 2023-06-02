@@ -10,13 +10,14 @@ const strategy = new GoogleStrategy(
   async (_, __, profile, done) => {
     try {
       const user = await User.find(profile.provider, profile.id);
-
+      console.log(user);
       if (!user) {
         User.create(
           profile.displayName,
           profile.id,
           profile.emails[0].value,
-          profile.provider
+          profile.provider,
+          profile.photos[0].value
         );
       }
 

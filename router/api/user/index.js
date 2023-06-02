@@ -1,9 +1,16 @@
 const Router = require("@koa/router");
 const { passport } = require("../../../middlewares");
-const User = new Router();
+const userRouter = new Router();
 
-User.get("/", passport.authenticate("local", { session: false }), (ctx) => {
-  ctx.body = { message: "im authed" };
-});
+userRouter.get(
+  "/",
+  passport.authenticate("local", { session: false }),
+  (ctx) => {
+    if (!ctx.user) ctx.throw(401);
 
-module.exports = User;
+    console.log(ctx.user);
+    ctx.body = { message: "im authed" };
+  }
+);
+
+module.exports = userRouter;
