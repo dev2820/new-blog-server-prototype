@@ -5,7 +5,6 @@ Notion.get("/", (ctx) => {
   /**
    * 노션 연결 생성
    */
-  console.log("?", process.env.NOTION_AUTH_URL);
   ctx.redirect(process.env.NOTION_AUTH_URL);
   // ctx.body = "Hello World!@";
 });
@@ -14,7 +13,7 @@ Notion.get("/callback", async (ctx) => {
   /**
    * notion 연결 처리
    */
-
+  console.log(ctx);
   const accessToken = "temp";
   ctx.redirect(`https://new-blog.store/api/link/callback?token=${accessToken}`);
 });
