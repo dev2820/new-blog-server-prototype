@@ -5,6 +5,7 @@ Notion.get("/", (ctx) => {
   /**
    * 노션 연결 생성
    */
+  console.log("?");
   ctx.redirect(process.env.NOTION_AUTH_URL);
   // ctx.body = "Hello World!@";
 });
