@@ -34,13 +34,13 @@ Notion.get("/callback", async (ctx) => {
       }
     );
 
-    console.log(data);
+    const { access_token: accessToken } = data;
+    ctx.redirect(
+      `https://new-blog.store/api/link/callback?token=${accessToken}`
+    );
   } catch (err) {
     ctx.throw(400);
   }
-
-  const accessToken = "??";
-  ctx.redirect(`https://new-blog.store/api/link/callback?token=${accessToken}`);
 });
 
 Notion.get("/callback/failure", (ctx) => {
