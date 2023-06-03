@@ -13,7 +13,8 @@ Notion.get("/callback", async (ctx) => {
   /**
    * notion 연결 처리
    */
-  console.log(ctx);
+  console.log(ctx.request.query);
+
   const accessToken = "temp";
   ctx.redirect(`https://new-blog.store/api/link/callback?token=${accessToken}`);
 });
