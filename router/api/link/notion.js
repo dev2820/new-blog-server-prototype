@@ -5,6 +5,7 @@ Notion.get("/", (ctx) => {
   /**
    * 노션 연결 생성
    */
+  ctx.body = "Hello World!@";
 });
 
 Notion.get("/callback", async (ctx) => {
