@@ -52,13 +52,15 @@ notionRouter.post(
       );
 
       const { access_token: accessToken } = data;
-
+      console.log("!");
       if (await Notion.find(email)) {
+        console.log("update");
         await Notion.update(email, accessToken);
       } else {
+        console.log("create");
         await Notion.create(email, accessToken);
       }
-
+      console.log("!!");
       ctx.body = "";
     } catch (error) {
       console.log(error.message);
