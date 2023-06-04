@@ -29,7 +29,7 @@ notionRouter.post(
   async (ctx) => {
     const { user } = ctx.state;
     if (!user) ctx.throw(401);
-
+    console.log(ctx);
     const { email } = user;
     console.log(ctx.params, ctx.request.body);
     const { code } = ctx.params;
@@ -57,7 +57,7 @@ notionRouter.post(
       console.log("token", accessToken);
       await Notion.create(email, accessToken);
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
       ctx.throw(500);
     }
   }
