@@ -27,9 +27,10 @@ notionRouter.post(
   "/regist-code",
   passport.authenticate("local", { session: false }),
   async (ctx) => {
-    if (!ctx.user) ctx.throw(401);
+    const { user } = ctx.state;
+    if (!user) ctx.throw(401);
 
-    const { email } = ctx.user;
+    const { email } = user;
     const { code } = ctx.params;
 
     const encoded = Buffer.from(
