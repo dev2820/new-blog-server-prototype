@@ -1,6 +1,7 @@
 const Router = require("@koa/router");
 const { passport } = require("../../../middlewares");
 const { User } = require("../../../models");
+const documentRouter = require("./document");
 const userRouter = new Router();
 
 userRouter.get(
@@ -18,5 +19,7 @@ userRouter.get(
     ctx.body = profile;
   }
 );
+
+userRouter.use(documentRouter.routes());
 
 module.exports = userRouter;
