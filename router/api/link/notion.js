@@ -31,6 +31,7 @@ notionRouter.post(
     if (!user) ctx.throw(401);
 
     const { email } = user;
+    console.log(ctx.params, ctx.request.body);
     const { code } = ctx.params;
     console.log("code", code);
     const encoded = Buffer.from(
@@ -53,7 +54,7 @@ notionRouter.post(
       );
       console.log("data", data);
       const { access_token: accessToken } = data;
-      console.log('token',accessToken)
+      console.log("token", accessToken);
       await Notion.create(email, accessToken);
     } catch (error) {
       console.log(error);
