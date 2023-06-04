@@ -1,5 +1,5 @@
 const Router = require("@koa/router");
-import { Client } from "@notionhq/client";
+const { Client } = require("@notionhq/client");
 const { Notion } = require("../../../../models");
 const Document = new Router();
 
