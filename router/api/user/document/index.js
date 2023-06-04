@@ -7,7 +7,7 @@ Document.get(
   "/",
   passport.authenticate("local", { session: false }),
   async (ctx) => {
-    const { user } = ctx;
+    const { user } = ctx.state;
     const { email } = user;
     const { access_token: accessToken } = await Notion.find(email);
 
