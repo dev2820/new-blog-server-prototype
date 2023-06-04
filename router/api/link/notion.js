@@ -31,12 +31,11 @@ notionRouter.post(
     if (!user) ctx.throw(401);
 
     const { email } = user;
-    const { code } = ctx.params;
-    console.log(ctx.params, ctx.request.body);
+    const { code } = ctx.request.body;
     const encoded = Buffer.from(
       `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_CLIENT_SECRET}`
     ).toString("base64");
-    console.log(code, " ", encoded);
+
     try {
       const { data } = await axios.post(
         "https://api.notion.com/v1/oauth/token",
