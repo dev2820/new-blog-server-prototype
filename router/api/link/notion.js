@@ -32,7 +32,7 @@ notionRouter.post(
 
     const { email } = user;
     const { code } = ctx.params;
-    console.log(ctx.params);
+    console.log(ctx.params, ctx.request.body);
     const encoded = Buffer.from(
       `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_CLIENT_SECRET}`
     ).toString("base64");
