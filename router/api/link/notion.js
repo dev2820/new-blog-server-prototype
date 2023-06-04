@@ -50,10 +50,11 @@ notionRouter.post(
           },
         }
       );
-      console.log("data", data);
+
       const { access_token: accessToken } = data;
-      console.log("token", accessToken);
       await Notion.create(email, accessToken);
+
+      ctx.body = "";
     } catch (error) {
       console.log(error.message);
       ctx.throw(500);
