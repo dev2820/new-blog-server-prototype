@@ -19,7 +19,7 @@ Document.get(
   }
 );
 
-export const getPageList = async (accessToken) => {
+const getPageList = async (accessToken) => {
   const notion = new Client({ auth: accessToken });
   const pages = await notion.search({
     query: "",
