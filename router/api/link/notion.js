@@ -1,6 +1,7 @@
 const Router = require("@koa/router");
 const notionRouter = new Router();
 const { Notion } = require("../../../models");
+const passport = require("../../../middlewares/passport");
 const axios = require("axios");
 
 /**
