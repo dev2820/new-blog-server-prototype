@@ -8,7 +8,7 @@ Document.get(
   async (ctx) => {
     const { user } = ctx;
     const { email } = user;
-    const accessToken = Notion.find(email);
+    const { accessToken } = await Notion.find(email);
 
     /**
      * 문서를 요청한다
