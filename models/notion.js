@@ -32,7 +32,7 @@ const create = async (email, accessToken) => {
 const update = async (email, accessToken) => {
   await pool
     .promise()
-    .query(`UPDATE ${TABLE_NAME} SET code=? WHERE email=?`, [
+    .query(`UPDATE ${TABLE_NAME} SET access_token=? WHERE email=?`, [
       accessToken,
       email,
     ]);
