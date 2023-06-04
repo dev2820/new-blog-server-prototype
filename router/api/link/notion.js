@@ -16,7 +16,7 @@ notionRouter.get("/callback", async (ctx) => {
    * notion 연결 처리
    */
   const { code } = ctx.request.query;
-  ctx.redirect(`https://new-blog.store/api/link/callback?code=${code}`);
+  ctx.redirect(`https://new-blog.store/link/callback?code=${code}`);
 });
 
 notionRouter.get("/callback/failure", (ctx) => {
