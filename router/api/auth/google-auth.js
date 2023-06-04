@@ -23,7 +23,6 @@ Google.get(
   async (ctx) => {
     const { user } = ctx.state;
     const userEmail = user.emails.find((email) => email.verified).value;
-    const avator = user.photos[0].value;
 
     const accessToken = token.generateAccessToken({ email: userEmail });
     const refreshToken = token.generateAccessToken({ email: userEmail });

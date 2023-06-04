@@ -1,50 +1,58 @@
 const Router = require("@koa/router");
-const Notion = new Router();
+const notionRouter = new Router();
+const { Notion } = require("../../../models");
 const axios = require("axios");
 
-Notion.get("/", (ctx) => {
-  /**
-   * 노션 연결 생성
-   */
+/**
+ * 노션 auth로 redirect
+ */
+notionRouter.get("/", (ctx) => {
   ctx.redirect(process.env.NOTION_AUTH_URL);
-  // ctx.body = "Hello World!@";
 });
 
-Notion.get("/callback", async (ctx) => {
+notionRouter.get("/callback", async (ctx) => {
   /**
    * notion 연결 처리
    */
   const { code } = ctx.request.query;
-  const encoded = Buffer.from(
-    `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_CLIENT_SECRET}`
-  ).toString("base64");
-
-  try {
-    const { data } = await axios.post(
-      "https://api.notion.com/v1/oauth/token",
-      {
-        grant_type: "authorization_code",
-        code,
-        redirect_uri: "https://new-blog.store/api/link/notion/callback",
-      },
-      {
-        headers: {
-          Authorization: `Basic ${encoded}`,
-        },
-      }
-    );
-
-    const { access_token: accessToken } = data;
-    ctx.redirect(
-      `https://new-blog.store/api/link/callback?token=${accessToken}`
-    );
-  } catch (err) {
-    ctx.throw(400);
-  }
+  ctx.redirect(`https://new-blog.store/api/link/callback?code=${code}`);
 });
 
-Notion.get("/callback/failure", (ctx) => {
+notionRouter.get("/callback/failure", (ctx) => {
   ctx.body = "연결에 실패했습니다!";
 });
 
-module.exports = Notion;
+notionRouter.post(
+  "/regist-code",
+  passport.authenticate("local", { session: false }),
+  async (ctx) => {
+    if (!ctx.user) ctx.throw(401);
+
+    const { email } = ctx.user;
+    const { code } = ctx.params;
+
+    const encoded = Buffer.from(
+      `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_CLIENT_SECRET}`
+    ).toString("base64");
+    try {
+      const { data } = await axios.post(
+        "https://api.notion.com/v1/oauth/token",
+        {
+          grant_type: "authorization_code",
+          code,
+          redirect_uri: "https://new-blog.store/api/link/notion/callback",
+        },
+        {
+          headers: {
+            Authorization: `Basic ${encoded}`,
+          },
+        }
+      );
+      const { access_token: accessToken } = data;
+      await Notion.create(email, accessToken);
+    } catch (error) {
+      ctx.throw(500);
+    }
+  }
+);
+module.exports = notionRouter;
