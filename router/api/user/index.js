@@ -20,6 +20,6 @@ userRouter.get(
   }
 );
 
-userRouter.use(documentRouter.routes());
+userRouter.use("/document", documentRouter.routes());
 
 module.exports = userRouter;
