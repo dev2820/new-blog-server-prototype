@@ -29,15 +29,14 @@ notionRouter.post(
   async (ctx) => {
     const { user } = ctx.state;
     if (!user) ctx.throw(401);
-    console.log(ctx);
+
     const { email } = user;
-    console.log(ctx.params, ctx.request.body);
     const { code } = ctx.params;
-    console.log("code", code);
+
     const encoded = Buffer.from(
       `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_CLIENT_SECRET}`
     ).toString("base64");
-
+    console.log(code, " ", encoded);
     try {
       const { data } = await axios.post(
         "https://api.notion.com/v1/oauth/token",
