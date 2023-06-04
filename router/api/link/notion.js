@@ -36,6 +36,7 @@ notionRouter.post(
     const encoded = Buffer.from(
       `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_CLIENT_SECRET}`
     ).toString("base64");
+
     try {
       const { data } = await axios.post(
         "https://api.notion.com/v1/oauth/token",
@@ -53,6 +54,7 @@ notionRouter.post(
       const { access_token: accessToken } = data;
       await Notion.create(email, accessToken);
     } catch (error) {
+      console.log(error);
       ctx.throw(500);
     }
   }
