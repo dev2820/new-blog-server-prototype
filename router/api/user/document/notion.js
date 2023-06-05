@@ -47,4 +47,4 @@ const getPageContent = async (pageId, accessToken) => {
   return results;
 };
 
-module.exports = Document;
+module.exports = notionRouter;
