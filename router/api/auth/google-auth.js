@@ -25,7 +25,7 @@ Google.get(
     const userEmail = user.emails.find((email) => email.verified).value;
 
     const accessToken = token.generateAccessToken({ email: userEmail });
-    const refreshToken = token.generateAccessToken({ email: userEmail });
+    const refreshToken = token.generateRefreshToken({ email: userEmail });
 
     const existRefreshToken = await Auth.find(userEmail);
     if (existRefreshToken) {
