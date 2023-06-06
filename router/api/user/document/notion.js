@@ -2,6 +2,7 @@ const Router = require("@koa/router");
 const { Client } = require("@notionhq/client");
 const { passport } = require("../../../../middlewares");
 const { Notion } = require("../../../../models");
+const axios = require("axios");
 const notionRouter = new Router();
 
 notionRouter.use(passport.authenticate("local", { session: false }));
