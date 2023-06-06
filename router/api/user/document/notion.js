@@ -47,9 +47,9 @@ const getPageList = async (accessToken) => {
 
 const getPageMeta = async (pageId, accessToken) => {
   const notion = new Client({ auth: accessToken });
-  const { results } = await notion.pages.retrieve({ page_id: pageId });
-
-  return results;
+  const result = await notion.pages.retrieve({ page_id: pageId });
+  console.log(result);
+  return result;
 };
 const getPageContent = async (pageId, accessToken) => {
   const notion = new Client({ auth: accessToken });
