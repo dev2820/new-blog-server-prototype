@@ -60,8 +60,13 @@ const getPageContent = async (pageId, accessToken) => {
 };
 
 const normalizePageContent = async (rawPageContent) => {
-  const pageContent = rawPageContent.map(async (content) => {
-    if (content.type !== "image") return content;
+  const pageContent = [];
+  for (let i = 0; i < rawPageContent.length; i++) {
+    const content = rawPageContent[i];
+    if (content.type !== "image") {
+      pageContent.push(content);
+      continue;
+    }
     console.log("work");
     try {
       let image = await axios.get(content["image"].file.url, {
@@ -73,8 +78,8 @@ const normalizePageContent = async (rawPageContent) => {
       console.error(error);
     }
 
-    return content;
-  });
+    pageContent.push(content);
+  }
 
   return pageContent;
 };
