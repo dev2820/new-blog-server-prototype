@@ -19,7 +19,7 @@ const _removeValue = async (key) => {
 
 const find = async (email) => {
   const result = await _getValue(email);
-  console.log(email, result);
+
   return result;
 };
 
