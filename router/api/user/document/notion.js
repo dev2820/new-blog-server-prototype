@@ -25,7 +25,7 @@ notionRouter.get("/:id", async (ctx) => {
   const { access_token: accessToken } = await Notion.find(email);
 
   const content = await getPageContent(id, accessToken);
-  ctx.body = content;
+  ctx.body = normalizePageContent(content);
 });
 
 const getPageList = async (accessToken) => {
@@ -45,6 +45,10 @@ const getPageContent = async (pageId, accessToken) => {
   const { results } = await notion.blocks.children.list({ block_id: pageId });
 
   return results;
+};
+
+const normalizePageContent = (rawContent) => {
+  return rawContent;
 };
 
 module.exports = notionRouter;
