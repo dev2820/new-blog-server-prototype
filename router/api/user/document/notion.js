@@ -24,8 +24,13 @@ notionRouter.get("/:id", async (ctx) => {
   const { email } = user;
   const { access_token: accessToken } = await Notion.find(email);
 
+  const meta = await getPageMeta(id, accessToken);
   const content = await getPageContent(id, accessToken);
-  ctx.body = normalizePageContent(content);
+
+  ctx.body = {
+    meta: normalizePageMeta(meta),
+    content: normalizePageContent(content),
+  };
 });
 
 const getPageList = async (accessToken) => {
@@ -40,6 +45,12 @@ const getPageList = async (accessToken) => {
   return pages;
 };
 
+const getPageMeta = async (pageId, accessToken) => {
+  const notion = new Client({ auth: accessToken });
+  const { results } = await notion.pages.retrieve({ page_id: pageId });
+
+  return results;
+};
 const getPageContent = async (pageId, accessToken) => {
   const notion = new Client({ auth: accessToken });
   const { results } = await notion.blocks.children.list({ block_id: pageId });
@@ -47,8 +58,12 @@ const getPageContent = async (pageId, accessToken) => {
   return results;
 };
 
-const normalizePageContent = (rawContent) => {
-  return rawContent;
+const normalizePageContent = (rawPageContent) => {
+  return rawPageContent;
+};
+
+const normalizePageMeta = (rawPageMeta) => {
+  return rawPageMeta;
 };
 
 module.exports = notionRouter;
