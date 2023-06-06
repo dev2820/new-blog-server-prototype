@@ -29,7 +29,7 @@ notionRouter.get("/:id", async (ctx) => {
 
   ctx.body = {
     meta: normalizePageMeta(meta),
-    content: normalizePageContent(content),
+    content: await normalizePageContent(content),
   };
 });
 
@@ -58,8 +58,24 @@ const getPageContent = async (pageId, accessToken) => {
   return results;
 };
 
-const normalizePageContent = (rawPageContent) => {
-  return rawPageContent;
+const normalizePageContent = async (rawPageContent) => {
+  const pageContent = rawPageContent.map(async (content) => {
+    if (content.type !== "image") return content;
+
+    try {
+      let image = await axios.get(content["image"].file.url, {
+        responseType: "arraybuffer",
+      });
+      let returnedB64 = Buffer.from(image.data).toString("base64");
+      content["image"].file.base64 = returnedB64;
+    } catch (error) {
+      console.error(error);
+    }
+
+    return content;
+  });
+
+  return pageContent;
 };
 
 const normalizePageMeta = (rawPageMeta) => {
