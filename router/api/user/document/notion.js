@@ -61,7 +61,7 @@ const getPageContent = async (pageId, accessToken) => {
 const normalizePageContent = async (rawPageContent) => {
   const pageContent = rawPageContent.map(async (content) => {
     if (content.type !== "image") return content;
-
+    console.log("work");
     try {
       let image = await axios.get(content["image"].file.url, {
         responseType: "arraybuffer",
