@@ -13,16 +13,30 @@ Document.post(
   async (ctx) => {
     const { user } = ctx.state;
     const { meta, blocks } = ctx.request.body;
-    console.log(meta, blocks);
-    await Post.insertMany([
-      { title: getTitle(meta), author: user.email, blocks },
-    ]);
+
+    /**
+     * blocks에서 image는 s3에 업로드하고 url 변경하기
+     */
+    if (Post.exists({ author: user.email, title: getTitle(meta) })) {
+      await Post.updateOne(
+        { title: getTitle(meta), author: user.email },
+        { $set: { blocks } }
+      );
+    } else {
+      await Post.collection.insertOne({
+        title: getTitle(meta),
+        author: user.email,
+        blocks,
+      });
+    }
+
     ctx.body = "";
   }
 );
-module.exports = Document;
 
 const getTitle = (meta) => {
   if (!meta.properties) return "";
   return meta.properties.title.title[0].text.content;
 };
+
+module.exports = Document;
