@@ -3,6 +3,7 @@ const { Client } = require("@notionhq/client");
 const { passport } = require("../../../../middlewares");
 const { Notion } = require("../../../../models");
 const axios = require("axios");
+const normalizer = require("../../../../utils/normalizer");
 const notionRouter = new Router();
 
 notionRouter.use(passport.authenticate("local", { session: false }));
@@ -60,26 +61,16 @@ const getPageContent = async (pageId, accessToken) => {
 };
 
 const normalizePageContent = async (rawPageContent) => {
-  const pageContent = rawPageContent;
-  // for (let i = 0; i < rawPageContent.length; i++) {
-  //   const content = rawPageContent[i];
-  //   if (content.type !== "image") {
-  //     pageContent.push(content);
-  //     continue;
-  //   }
-  //   console.log("work");
-  //   try {
-  //     let image = await axios.get(content["image"].file.url, {
-  //       responseType: "arraybuffer",
-  //     });
-  //     // let returnedB64 = Buffer.from(image.data).toString("base64");
-  //     content["image"].file.base64 = returnedB64;
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-
-  //   pageContent.push(content);
-  // }
+  const pageContent = rawPageContent.map((block) => {
+    if (block.type === "paragraph") return normalizer.normalizeParagraph(block);
+    if (block.type === "image") return normalizer.normalizeImage(block);
+    if (block.type === "bookmark") return normalizer.normalizeBookmark(block);
+    if (block.type === "heading_1") return normalizer.normalizeHeading1(block);
+    if (block.type === "heading_2") return normalizer.normalizeHeading2(block);
+    if (block.type === "heading_3") return normalizer.normalizeHeading3(block);
+    if (block.type === "bulleted_list_item")
+      return normalizer.normalizeBulletedListItem(block);
+  });
 
   return pageContent;
 };
