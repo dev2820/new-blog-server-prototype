@@ -60,26 +60,26 @@ const getPageContent = async (pageId, accessToken) => {
 };
 
 const normalizePageContent = async (rawPageContent) => {
-  const pageContent = [];
-  for (let i = 0; i < rawPageContent.length; i++) {
-    const content = rawPageContent[i];
-    if (content.type !== "image") {
-      pageContent.push(content);
-      continue;
-    }
-    console.log("work");
-    try {
-      let image = await axios.get(content["image"].file.url, {
-        responseType: "arraybuffer",
-      });
-      let returnedB64 = Buffer.from(image.data).toString("base64");
-      content["image"].file.base64 = returnedB64;
-    } catch (error) {
-      console.error(error);
-    }
+  const pageContent = rawPageContent;
+  // for (let i = 0; i < rawPageContent.length; i++) {
+  //   const content = rawPageContent[i];
+  //   if (content.type !== "image") {
+  //     pageContent.push(content);
+  //     continue;
+  //   }
+  //   console.log("work");
+  //   try {
+  //     let image = await axios.get(content["image"].file.url, {
+  //       responseType: "arraybuffer",
+  //     });
+  //     // let returnedB64 = Buffer.from(image.data).toString("base64");
+  //     content["image"].file.base64 = returnedB64;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
 
-    pageContent.push(content);
-  }
+  //   pageContent.push(content);
+  // }
 
   return pageContent;
 };
