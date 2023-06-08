@@ -19,6 +19,7 @@ Document.post(
      * id를 읽어와서 notion으로부터 blocks 가져오고 업로드 하도록 수정하기
      * path를 입력받아 post-structure에 넣기
      */
+    console.log(user);
     if (provider === "notion") {
       const content = await notion.getPageContent(pageId, accessToken);
       const meta = await notion.getPageMeta(pageId, accessToken);
