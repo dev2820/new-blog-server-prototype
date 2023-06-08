@@ -22,21 +22,18 @@ Document.post(
     if (provider === "notion") {
       const content = await notion.getPageContent(pageId, accessToken);
       const meta = await notion.getPageMeta(pageId, accessToken);
-      console.log({ author: user.email, title: getTitle(meta) });
-      console.log(content);
+
       if (await Post.exists({ author: user.email, title: getTitle(meta) })) {
-        console.log("exist??");
         await Post.updateOne(
           { title: getTitle(meta), author: user.email },
-          { blocks: content.blocks }
+          { blocks: content }
         );
       } else {
         const newPost = new Post({
           title: getTitle(meta),
           author: user.email,
-          blocks: content.blocks,
+          blocks: content,
         });
-        console.log(37, newPost);
         await newPost.save();
       }
     }
