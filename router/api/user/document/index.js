@@ -24,6 +24,7 @@ Document.post(
       const meta = await notion.getPageMeta(pageId, accessToken);
       console.log({ author: user.email, title: getTitle(meta) });
       if (Post.exists({ author: user.email, title: getTitle(meta) })) {
+        console.log("exist??");
         await Post.updateOne(
           { title: getTitle(meta), author: user.email },
           { blocks: content.blocks }
