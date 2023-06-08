@@ -29,7 +29,7 @@ Document.post(
           { blocks: content.blocks }
         );
       } else {
-        await Post.collection.insertOne({
+        await Post.insertOne({
           title: getTitle(meta),
           author: user.email,
           blocks: content.blocks,
