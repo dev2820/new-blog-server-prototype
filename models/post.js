@@ -9,7 +9,6 @@ if (!mongoose.connection.readyState) {
 }
 
 const postSchema = new mongoose.Schema({
-  _id: { type: String, default: () => uuid.v1() },
   title: { type: String, required: true },
   author: { type: String, required: true },
   blocks: { type: Array },
