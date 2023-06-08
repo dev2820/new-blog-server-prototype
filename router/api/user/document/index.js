@@ -23,15 +23,15 @@ Document.post(
       const content = await notion.getPageContent(pageId, accessToken);
       const meta = await notion.getPageMeta(pageId, accessToken);
 
-      if (await Post.exists({ author: user.email, title: getTitle(meta) })) {
+      if (await Post.exists({ author: user.name, title: getTitle(meta) })) {
         await Post.updateOne(
-          { title: getTitle(meta), author: user.email },
+          { title: getTitle(meta), author: user.name },
           { blocks: content }
         );
       } else {
         const newPost = new Post({
           title: getTitle(meta),
-          author: user.email,
+          author: user.name,
           blocks: content,
         });
         await newPost.save();
