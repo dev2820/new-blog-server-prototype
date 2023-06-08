@@ -7,7 +7,7 @@ postRouter.get("/@:author/:title", async (ctx) => {
   const { author, title } = ctx.params;
   console.log(author, title);
   const post = await Post.findOne({ author, title });
-
+  console.log(normalizePageContent(post.blocks));
   const response = {
     meta: {
       author: post.author,
