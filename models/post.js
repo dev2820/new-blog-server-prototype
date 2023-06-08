@@ -14,6 +14,6 @@ const postSchema = new mongoose.Schema({
   blocks: { type: Array },
 });
 
-const Post = mongoose.model("TestPost", postSchema);
+const Post = mongoose.model("Post", postSchema);
 
 module.exports = Post;
