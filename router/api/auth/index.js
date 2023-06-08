@@ -31,7 +31,7 @@ authRouter.get("/update-token", async (ctx) => {
      * access token이 만료되었고 refresh token도 있다.
      * access token을 새로 발급해준다.
      */
-    const newAccessToken = token.generateAccessToken({ email });
+    const newAccessToken = token.generateAccessToken({ name, email });
     ctx.set("Authorization", `Bearer ${newAccessToken}`);
     ctx.body = null;
   } catch (error) {

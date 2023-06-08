@@ -22,10 +22,18 @@ Google.get(
   }),
   async (ctx) => {
     const { user } = ctx.state;
+    console.log("google-auth", user);
     const userEmail = user.emails.find((email) => email.verified).value;
+    const userName = user.displayName;
 
-    const accessToken = token.generateAccessToken({ email: userEmail });
-    const refreshToken = token.generateRefreshToken({ email: userEmail });
+    const accessToken = token.generateAccessToken({
+      name: userName,
+      email: userEmail,
+    });
+    const refreshToken = token.generateRefreshToken({
+      name: userName,
+      email: userEmail,
+    });
 
     const existRefreshToken = await Auth.find(userEmail);
     if (existRefreshToken) {
