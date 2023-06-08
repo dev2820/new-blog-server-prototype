@@ -34,7 +34,7 @@ Document.post(
           author: user.email,
           blocks: content.blocks,
         });
-        console.log(newPost);
+        console.log(37, newPost);
         await newPost.save();
       }
     }
