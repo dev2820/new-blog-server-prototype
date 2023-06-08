@@ -1,7 +1,8 @@
 const Router = require("@koa/router");
-const { Client } = require("@notionhq/client");
 const { passport } = require("../../../../middlewares");
 const { Notion, Post } = require("../../../../models");
+const { notion } = require("../../../../utils");
+
 const notionRouter = require("./notion");
 const Document = new Router();
 
@@ -12,23 +13,33 @@ Document.post(
   passport.authenticate("local", { session: false }),
   async (ctx) => {
     const { user } = ctx.state;
-    const { meta, blocks } = ctx.request.body;
+    const { provider, pageId } = ctx.request.body;
+    const { access_token: accessToken } = await Notion.find(user.email);
+    /**
+     * id를 읽어와서 notion으로부터 blocks 가져오고 업로드 하도록 수정하기
+     * path를 입력받아 post-structure에 넣기
+     */
+    if (provider === "notion") {
+      const content = await notion.getPageContent(pageId, accessToken);
+      const meta = await notion.getPageMeta(pageId, accessToken);
 
+      console.log(content, meta);
+    }
     /**
      * blocks에서 image는 s3에 업로드하고 url 변경하기
      */
-    if (Post.exists({ author: user.email, title: getTitle(meta) })) {
-      await Post.updateOne(
-        { title: getTitle(meta), author: user.email },
-        { blocks }
-      );
-    } else {
-      await Post.collection.insertOne({
-        title: getTitle(meta),
-        author: user.email,
-        blocks,
-      });
-    }
+    // if (Post.exists({ author: user.email, title: getTitle(meta) })) {
+    //   await Post.updateOne(
+    //     { title: getTitle(meta), author: user.email },
+    //     { blocks }
+    //   );
+    // } else {
+    //   await Post.collection.insertOne({
+    //     title: getTitle(meta),
+    //     author: user.email,
+    //     blocks,
+    //   });
+    // }
 
     ctx.body = "";
   }
