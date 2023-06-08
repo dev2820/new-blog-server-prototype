@@ -21,7 +21,7 @@ postRouter.get("/@:author/:title", async (ctx) => {
 
 module.exports = postRouter;
 
-const normalizePageContent = async (rawPageContent) => {
+const normalizePageContent = (rawPageContent) => {
   const pageContent = rawPageContent.map((block) => {
     if (block.type === "paragraph") return normalizer.normalizeParagraph(block);
     if (block.type === "image") return normalizer.normalizeImage(block);
