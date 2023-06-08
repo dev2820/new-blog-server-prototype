@@ -26,13 +26,13 @@ Document.post(
       if (Post.exists({ author: user.email, title: getTitle(meta) })) {
         await Post.updateOne(
           { title: getTitle(meta), author: user.email },
-          { blocks }
+          { blocks: content.blocks }
         );
       } else {
         await Post.collection.insertOne({
           title: getTitle(meta),
           author: user.email,
-          blocks,
+          blocks: content.blocks,
         });
       }
     }
