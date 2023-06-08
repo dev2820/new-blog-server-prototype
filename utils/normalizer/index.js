@@ -48,6 +48,13 @@ const normalizeBookmark = (block) => {
   };
 };
 
+const normalizeQuote = (block) => {
+  return {
+    type: "quote",
+    richText: block["quote"].rich_text,
+  };
+};
+
 module.exports = {
   normalizeParagraph,
   normalizeImage,
@@ -56,4 +63,5 @@ module.exports = {
   normalizeHeading2,
   normalizeHeading3,
   normalizeBookmark,
+  normalizeQuote,
 };
