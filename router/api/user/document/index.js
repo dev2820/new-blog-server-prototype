@@ -23,23 +23,22 @@ Document.post(
       const content = await notion.getPageContent(pageId, accessToken);
       const meta = await notion.getPageMeta(pageId, accessToken);
 
-      console.log(content, meta);
+      if (Post.exists({ author: user.email, title: getTitle(meta) })) {
+        await Post.updateOne(
+          { title: getTitle(meta), author: user.email },
+          { blocks }
+        );
+      } else {
+        await Post.collection.insertOne({
+          title: getTitle(meta),
+          author: user.email,
+          blocks,
+        });
+      }
     }
     /**
      * blocks에서 image는 s3에 업로드하고 url 변경하기
      */
-    // if (Post.exists({ author: user.email, title: getTitle(meta) })) {
-    //   await Post.updateOne(
-    //     { title: getTitle(meta), author: user.email },
-    //     { blocks }
-    //   );
-    // } else {
-    //   await Post.collection.insertOne({
-    //     title: getTitle(meta),
-    //     author: user.email,
-    //     blocks,
-    //   });
-    // }
 
     ctx.body = "";
   }
