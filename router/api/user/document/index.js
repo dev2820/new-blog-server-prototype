@@ -36,7 +36,7 @@ Document.post(
             const promiseBlock = new Promise((resolve, reject) => {
               Image.uploadImageFromURL(
                 process.env.AWS_S3_BUCKET,
-                uuidV4(),
+                block.id,
                 block.url
               ).then((res) => {
                 resolve(res);
