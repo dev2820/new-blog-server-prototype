@@ -23,37 +23,33 @@ Document.post(
       const rawBlocks = await notion.getPageContent(pageId, accessToken);
       const meta = await notion.getPageMeta(pageId, accessToken);
       const blocks = normalizePageContent(rawBlocks);
-
+      const promiseContents = blocks.map((block) => {
+        if (block.type === "image") {
+          const promiseBlock = new Promise((resolve, reject) => {
+            Image.uploadImageFromURL(
+              process.env.AWS_S3_BUCKET,
+              block.blockId,
+              block.url
+            ).then((res) => {
+              block.url = res;
+              resolve(block);
+            });
+          });
+          return promiseBlock;
+        } else {
+          return block;
+        }
+      });
+      /**
+       * upload images
+       */
+      const content = await Promise.all(promiseContents);
       if (await Post.exists({ author: user.name, title: getTitle(meta) })) {
         await Post.updateOne(
           { title: getTitle(meta), author: user.name },
-          { blocks: blocks }
+          { blocks: content }
         );
       } else {
-        const promiseContents = blocks.map((block) => {
-          if (block.type === "image") {
-            console.log(block);
-            // promise
-            const promiseBlock = new Promise((resolve, reject) => {
-              Image.uploadImageFromURL(
-                process.env.AWS_S3_BUCKET,
-                block.blockId,
-                block.url
-              ).then((res) => {
-                block.url = res;
-                resolve(block);
-              });
-            });
-            return promiseBlock;
-          } else {
-            return block;
-          }
-        });
-        /**
-         * upload images
-         */
-        const content = await Promise.all(promiseContents);
-
         const newPost = new Post({
           title: getTitle(meta),
           author: user.name,
