@@ -22,6 +22,7 @@ Google.get(
   }),
   async (ctx) => {
     const { user } = ctx.state;
+    console.log(25, user);
     const userEmail = user.emails.find((email) => email.verified).value;
     const userName = user.displayName;
 
