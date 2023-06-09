@@ -4,6 +4,7 @@ const { Notion, Post, Image } = require("../../../../models");
 const { notion } = require("../../../../utils");
 const normalizer = require("../../../../utils/normalizer");
 const axios = require("axios");
+const { v4: uuidV4 } = require("uuid");
 
 const notionRouter = require("./notion");
 const Document = new Router();
@@ -35,6 +36,7 @@ Document.post(
             const promiseBlock = new Promise((resolve, reject) => {
               Image.uploadImageFromURL(
                 process.env.AWS_S3_BUCKET,
+                uuidV4(),
                 block.url
               ).then((res) => {
                 resolve(res);
@@ -49,6 +51,7 @@ Document.post(
          * upload images
          */
         const content = await Promise.all(promiseContents);
+        console.log(content);
         const newPost = new Post({
           title: getTitle(meta),
           author: user.name,
