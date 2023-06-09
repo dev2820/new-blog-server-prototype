@@ -40,7 +40,6 @@ Document.post(
                 block.blockId,
                 block.url
               ).then((res) => {
-                console.log(res);
                 block.url = res;
                 resolve(block);
               });
@@ -54,7 +53,7 @@ Document.post(
          * upload images
          */
         const content = await Promise.all(promiseContents);
-        console.log(content);
+
         const newPost = new Post({
           title: getTitle(meta),
           author: user.name,
