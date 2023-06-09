@@ -6,6 +6,7 @@ const postRouter = new Router();
 postRouter.get("/@:author/:title", async (ctx) => {
   const { author, title } = ctx.params;
   const post = await Post.findOne({ author, title });
+  console.log("post", post);
   const response = {
     meta: {
       author: post.author,

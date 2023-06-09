@@ -32,7 +32,7 @@ Document.post(
         const promiseContents = blocks.map((block) => {
           if (block.type === "image") {
             // promise
-            // Image.uploadImageFromURL()
+            Image.uploadImageFromURL(process.env.AWS_S3_BUCKET, block.url);
             console.log("image", block);
             return block;
           } else {

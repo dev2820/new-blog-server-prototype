@@ -6,9 +6,11 @@ const normalizeParagraph = (block) => {
 };
 
 const normalizeImage = (block) => {
+  console.log(block);
   return {
     type: "image",
     url: block["image"].file.url,
+    blockId: block.id,
     caption: [],
   };
 };
