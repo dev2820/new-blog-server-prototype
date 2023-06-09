@@ -43,6 +43,7 @@ const normalizeHeading3 = (block) => {
 };
 
 const normalizeBookmark = (block) => {
+  console.log(block);
   return {
     type: "bookmark",
     url: block["bookmark"].url,

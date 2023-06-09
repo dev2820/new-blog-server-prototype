@@ -32,9 +32,15 @@ Document.post(
         const promiseContents = blocks.map((block) => {
           if (block.type === "image") {
             // promise
-            Image.uploadImageFromURL(process.env.AWS_S3_BUCKET, block.url);
-            console.log("image", block);
-            return block;
+            const promiseBlock = new Promise((resolve, reject) => {
+              Image.uploadImageFromURL(
+                process.env.AWS_S3_BUCKET,
+                block.url
+              ).then((res) => {
+                resolve(res);
+              });
+            });
+            return promiseBlock;
           } else {
             return block;
           }
