@@ -28,7 +28,7 @@ notionRouter.get("/:id", async (ctx) => {
 
   const meta = await getPageMeta(id, accessToken);
   const content = await getPageContent(id, accessToken);
-  console.log(content);
+
   ctx.body = {
     meta: normalizePageMeta(meta),
     content: await normalizePageContent(content),
