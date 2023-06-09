@@ -32,11 +32,12 @@ Document.post(
       } else {
         const promiseContents = blocks.map((block) => {
           if (block.type === "image") {
+            console.log(block);
             // promise
             const promiseBlock = new Promise((resolve, reject) => {
               Image.uploadImageFromURL(
                 process.env.AWS_S3_BUCKET,
-                block.id,
+                block.blockId,
                 block.url
               ).then((res) => {
                 resolve(res);
