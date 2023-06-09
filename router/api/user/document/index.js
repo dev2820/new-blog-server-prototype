@@ -40,7 +40,9 @@ Document.post(
                 block.blockId,
                 block.url
               ).then((res) => {
-                resolve(res);
+                console.log(res);
+                block.url = res;
+                resolve(block);
               });
             });
             return promiseBlock;

@@ -18,9 +18,11 @@ async function uploadImageFromURL(bucketName, objectKey, imageUrl) {
     };
 
     const uploadResult = await s3.upload(params).promise();
-    console.log("Image uploaded successfully:", uploadResult.Location);
+
+    return uploadResult.Location;
   } catch (error) {
     console.error("Error:", error);
+    return null;
   }
 }
 
