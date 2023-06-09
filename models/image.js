@@ -8,6 +8,7 @@ const s3 = new AWS.S3({
 });
 
 async function uploadImageFromURL(bucketName, objectKey, imageUrl) {
+  console.log(process.env);
   try {
     const { data } = await axios.get(imageUrl, { responseType: "arraybuffer" });
 
