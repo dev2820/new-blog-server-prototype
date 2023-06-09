@@ -10,7 +10,7 @@ userRouter.get(
   async (ctx) => {
     const { user } = ctx.state;
     if (!user) ctx.throw(401);
-
+    console.log(user);
     const _userInfo = await User.find(user.email);
     const profile = {
       name: _userInfo.name,
