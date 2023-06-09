@@ -21,6 +21,13 @@ const normalizeBulletedListItem = (block) => {
   };
 };
 
+const normalizeNumberedListItem = (block) => {
+  return {
+    type: "numbered_list_item",
+    richText: block["numbered_list_item"].rich_text,
+  };
+};
+
 const normalizeHeading1 = (block) => {
   return {
     type: "heading_1",
@@ -60,6 +67,7 @@ module.exports = {
   normalizeParagraph,
   normalizeImage,
   normalizeBulletedListItem,
+  normalizeNumberedListItem,
   normalizeHeading1,
   normalizeHeading2,
   normalizeHeading3,

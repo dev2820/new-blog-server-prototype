@@ -85,6 +85,8 @@ const normalizePageContent = (rawPageContent) => {
     if (block.type === "heading_3") return normalizer.normalizeHeading3(block);
     if (block.type === "bulleted_list_item")
       return normalizer.normalizeBulletedListItem(block);
+    if (block.type === "numbered_list_item")
+      return normalizer.normalizeNumberedListItem(block);
     if (block.type === "quote") return normalizer.normalizeQuote(block);
     return block;
   });
