@@ -11,7 +11,7 @@ postRouter.get("/@:author/:title", async (ctx) => {
       author: post.author,
       title: post.title,
     },
-    contents: normalizePageContent(post.blocks),
+    contents: post.blocks,
   };
 
   ctx.body = response;
