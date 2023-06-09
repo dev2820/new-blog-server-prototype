@@ -19,7 +19,7 @@ authRouter.get("/update-token", async (ctx) => {
     const decoded = token.verify(_prevToken, { ignoreExpiration: true });
     if (!decoded) throw Error();
 
-    const { email } = decoded;
+    const { email, name } = decoded;
     const refreshToken = await Auth.find(email);
     /**
      * refresh token이 없다 or 유효하지 않다
