@@ -58,9 +58,6 @@ Document.post(
         await newPost.save();
       }
     }
-    /**
-     * blocks에서 image는 s3에 업로드하고 url 변경하기
-     */
 
     ctx.body = "";
   }
